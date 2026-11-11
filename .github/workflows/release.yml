@@ -1,0 +1,43 @@
+name: Build and Release BobrDobr VPN (Legacy Python)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Build Windows Release (Python)
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Build Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build Standalone Windows Executable
+        shell: pwsh
+        run: |
+          python -m PyInstaller --clean --noconfirm --distpath="dist/windows" BobrDobr-VPN.spec
+
+      - name: Create GitHub Release and Upload Binary
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/windows/BobrDobr-VPN-*.exe
+          name: "БобрДобр VPN ${{ github.ref_name }} (Legacy Python)"
+          generate_release_notes: true
+          draft: false
+          prerelease: false

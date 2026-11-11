@@ -2,5 +2,6 @@
 APP_VERSION = "1.1.1"
 APP_NAME = "БобрДобр"
 APP_TITLE = f"{APP_NAME} v{APP_VERSION} | Заповедник гидроинженерии"
-GITHUB_REPO = "Phoenix1302/BobrDobr"
+GITHUB_REPO = "Phoenix1302/bobrdobr-old"
 GITHUB_RELEASES_URL = f"https://github.com/{GITHUB_REPO}/releases"
+
